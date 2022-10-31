@@ -3,19 +3,43 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Models\Brand;
+use App\Enums\UserRole;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class WatchPolicy
+class BrandPolicy
 {
     use HandlesAuthorization;
 
     /**
-     * Create a new policy instance.
+     * Determine whether the user can view any models.
      *
-     * @return void
+     * @param  \App\Models\User  $user
+     * @return mixed
      */
-    public function __construct()
+    public function viewAny(User $user, $ability)
     {
-        //
+        // 4 is the id of the admin role
+        return $user->hasRole(UserRole::getKey(4));
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Brand  $Brand
+     * @return mixed
+     */
+    public function view(User $user, Brand $Brand)
+    {
+        switch ($user->role) {
+            case UserRole::getKey(4):
+                return true;
+            case UserRole::getKey(3):
+            default:
+                return $user->id === $Brand->user_id;
+
+                return false;
+        }
     }
 }

@@ -7,5 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class WishList extends Model
 {
-    use HasFactory;
+    protected $fillable = ['user_id', 'watch_id'];
+
+    /**
+     * @return BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function watches()
+    {
+        return $this->hasMany(Watch::class);
+    }
 }

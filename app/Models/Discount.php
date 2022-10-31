@@ -11,7 +11,7 @@ class Discount extends Model
     protected $fillable = ['name', 'value', 'start_date', 'end_date', 'quantity', 'description'];
 
     /**
-     * @return HasMany
+     * @return BelongsToMany
      */
     public function watches()
     {
@@ -26,7 +26,7 @@ class Discount extends Model
         return $this->hasMany(Order::class);
     }
     /**
-     * @return HasMany
+     * @return BeLongsToManyny
      */
     public function users()
     {
